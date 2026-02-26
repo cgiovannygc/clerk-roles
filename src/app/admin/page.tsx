@@ -49,10 +49,10 @@ export default async function AdminDashboard(params: {
             <div className="mb-4 space-y-1">
               <div className="mb-2">
                 <img
-                  width={48}
+                  width={60}
                   src={user.imageUrl}
                   alt={`Imagen de ${user.firstName}`}
-                  className="rounded-3xl"
+                  className="rounded-4xl mb-1"
                 />
               </div>
               <div>
