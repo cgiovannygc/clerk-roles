@@ -16,7 +16,7 @@ export default function SideBar() {
           <button
             type="button"
             onClick={() => setIsSidebarOpen((prev) => !prev)}
-            className="rounded-md border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
+            className="rounded-md border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-gray-700"
           >
             Menú
           </button>
@@ -69,7 +69,7 @@ export default function SideBar() {
           <button
             type="button"
             onClick={() => setIsSidebarOpen(false)}
-            className="rounded-md border border-border px-2.5 py-1 text-sm transition-colors hover:bg-muted"
+            className="rounded-md border border-border px-2.5 py-1 text-sm transition-colors hover:bg-gray-700"
           >
             Cerrar
           </button>
@@ -78,7 +78,7 @@ export default function SideBar() {
           <Link
             href="/home"
             onClick={() => setIsSidebarOpen(false)}
-            className="rounded-md px-2 py-1.5 transition-colors hover:bg-muted"
+            className="rounded-md px-2 py-1.5 transition-colors hover:bg-gray-800"
           >
             Inicio
           </Link>
@@ -86,7 +86,7 @@ export default function SideBar() {
             <Link
               href="/admin"
               onClick={() => setIsSidebarOpen(false)}
-              className="rounded-md px-2 py-1.5 transition-colors hover:bg-muted"
+              className="rounded-md px-2 py-1.5 transition-colors hover:bg-gray-800"
             >
               Dashboard
             </Link>
@@ -94,7 +94,7 @@ export default function SideBar() {
           <Link
             href="/about"
             onClick={() => setIsSidebarOpen(false)}
-            className="rounded-md px-2 py-1.5 transition-colors hover:bg-muted"
+            className="rounded-md px-2 py-1.5 transition-colors hover:bg-gray-800"
           >
             About
           </Link>

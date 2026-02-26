@@ -47,20 +47,29 @@ export default async function AdminDashboard(params: {
             className="rounded-lg border border-border bg-background/80 p-4 backdrop-blur"
           >
             <div className="mb-4 space-y-1">
-              <p className="text-sm font-semibold tracking-wide text-foreground">
-                {user.firstName} {user.lastName}
-              </p>
-              <p className="text-sm text-muted-foreground">{email}</p>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="mb-2">
+                <img
+                  width={48}
+                  src={user.imageUrl}
+                  alt={`Imagen de ${user.firstName}`}
+                  className="rounded-3xl"
+                />
+              </div>
+              <div>
+                <p className="text-sm font-semibold tracking-wide text-foreground p-1">
+                  {user.firstName} {user.lastName}
+                </p>
+                <p className="text-sm text-muted-foreground p-1">{email}</p>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground p-1">
                 <span>Rol actual:</span>
                 <span
-                  className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium tracking-wide ${rolePillClass}`}
+                  className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium tracking-wide ${rolePillClass} p-1`}
                 >
                   {currentRole}
                 </span>
               </div>
             </div>
-
             <div className="flex flex-wrap gap-2">
               <form
                 action={async (formData) => {
@@ -72,12 +81,11 @@ export default async function AdminDashboard(params: {
                 <input type="hidden" value="admin" name="role" />
                 <button
                   type="submit"
-                  className="rounded-md border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
+                  className="rounded-md border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-gray-700"
                 >
                   Hacer admin
                 </button>
               </form>
-
               <form
                 action={async (formData) => {
                   "use server";
@@ -88,12 +96,11 @@ export default async function AdminDashboard(params: {
                 <input type="hidden" value="user" name="role" />
                 <button
                   type="submit"
-                  className="rounded-md border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
+                  className="rounded-md border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-green-700"
                 >
                   Hacer usuario
                 </button>
               </form>
-
               <form
                 action={async (formData) => {
                   "use server";
@@ -103,7 +110,7 @@ export default async function AdminDashboard(params: {
                 <input type="hidden" value={user.id} name="id" />
                 <button
                   type="submit"
-                  className="rounded-md bg-foreground px-3 py-1.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+                  className="rounded-md bg-foreground px-3 py-1.5 text-sm font-medium text-background transition-colors hover:bg-red-600"
                 >
                   Remover Rol
                 </button>

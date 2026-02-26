@@ -41,7 +41,7 @@ export const SearchUsers = () => {
         />
         <button
           type="submit"
-          className="h-10 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-opacity hover:opacity-90"
+          className="h-10 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-opacity hover:opacity-70"
         >
           Buscar
         </button>
