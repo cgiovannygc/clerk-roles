@@ -81,6 +81,6 @@ export const updateStockProduct = mutation({
     if (!product) {
       throw new Error("Producto no encontrado");
     }
-    return await ctx.db.patch("products", id, { stock: product.stock - 1 });
+    return await ctx.db.patch("products", id, { stock: product.stock! - 1 });
   },
 });

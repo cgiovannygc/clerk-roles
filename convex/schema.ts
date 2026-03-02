@@ -15,6 +15,6 @@ export default defineSchema({
     description: v.string(),
     price: v.number(),
     imageUrl: v.optional(v.string()),
-    stock: v.number(),
+    stock: v.optional(v.number()),
   }),
 });
