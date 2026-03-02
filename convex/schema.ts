@@ -10,4 +10,11 @@ export default defineSchema({
     role: v.optional(v.string()),
     imageUrl: v.optional(v.string()),
   }).index("by_clerk_id", ["clerkId"]),
+  products: defineTable({
+    name: v.string(),
+    description: v.string(),
+    price: v.number(),
+    imageUrl: v.optional(v.string()),
+    stock: v.number(),
+  }),
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, useAuth, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -25,10 +25,11 @@ export default function SideBar() {
           </p>
           <div className="flex items-center gap-2">
             {user.isLoaded ? (
-              user.isSignedIn ? (
-                <UserButton />
-              ) : (
-                <div className="flex items-center gap-2">
+              <>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
+                <SignedOut>
                   <Link
                     href="/signup"
                     className="rounded-md border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
@@ -41,8 +42,8 @@ export default function SideBar() {
                   >
                     Iniciar sesión
                   </Link>
-                </div>
-              )
+                </SignedOut>
+              </>
             ) : (
               <p className="text-sm text-gray-500"></p>
             )}
@@ -91,6 +92,13 @@ export default function SideBar() {
               Dashboard
             </Link>
           )}
+          <Link
+            href="/store"
+            onClick={() => setIsSidebarOpen(false)}
+            className="rounded-md px-2 py-1.5 transition-colors hover:bg-gray-800"
+          >
+            Tienda
+          </Link>
           <Link
             href="/about"
             onClick={() => setIsSidebarOpen(false)}
