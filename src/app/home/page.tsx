@@ -1,3 +1,7 @@
 export default function HomePage() {
-  return <h2>Home page</h2>;
+  return (
+    <div className="flex justify-center items-center p-5">
+      <div className="font-bold text-6xl"></div>
+    </div>
+  );
 }

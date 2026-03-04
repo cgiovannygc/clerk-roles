@@ -21,6 +21,7 @@ export async function POST(req: Request) {
           currency: "usd",
           product_data: {
             name: body.name,
+            description: body.description,
             images: [body.imageUrl],
           },
           unit_amount: body.price * 100, // el precio se multiplica por 100 porque stripe maneja los precios en centavos

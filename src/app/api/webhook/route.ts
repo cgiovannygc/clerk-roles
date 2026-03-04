@@ -33,7 +33,8 @@ export async function POST(req: Request): Promise<Response> {
     case "checkout.session.completed":
       try {
         await fetchMutation(api.products.updateStockProduct, {
-          id: event.data.object.metadata?.productId as Id<"products">, // obtenemos el id del producto desde los metadatos de la sesion de checkout
+          id: event.data.object.metadata?.productId as Id<"products">,
+          // obtenemos el id del producto desde los metadatos de la sesion de checkout
         });
         return NextResponse.json({ success: true });
       } catch (error) {
@@ -45,5 +46,6 @@ export async function POST(req: Request): Promise<Response> {
     default:
       console.warn(`Evento no soportado: ${event.type}`);
       return NextResponse.json({ error: "Event not supported" });
+      break;
   }
 }
