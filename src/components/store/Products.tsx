@@ -1,10 +1,12 @@
 "use client";
 
 import { api } from "@/convex/_generated/api";
+import { useRouter } from "next/navigation";
 import { Doc } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
 
 export default function Products() {
+  const router = useRouter();
   const products = useQuery(api.products.getProducts);
   if (!products) {
     return (
@@ -33,7 +35,7 @@ export default function Products() {
       const session = await res.json();
 
       if (session.url) {
-        window.location.href = session.url;
+        router.push(session.url);
       }
     } catch (error) {
       console.error("Error during checkout:", error);
@@ -42,24 +44,19 @@ export default function Products() {
   };
   return (
     <>
-      <h1 className="text-5xl mb-5">Todos los productos</h1>
-      <div className="grid grid-cols-3 gap-10">
+      <h1 className="text-5xl mb-10 text-center">Todos los productos</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product, i) => (
           <div
             key={i}
-            className="bg-slate-800 text-center p-4 rounded-md text-white"
+            className="bg-black border border-white text-center p-4 rounded-md text-white"
           >
             <h2 className="font-bold text-lg">{product.name}</h2>
             <p className="text-xs font-light">{product.description}</p>
-            <p className="text-2xl font-bold">{product.price}</p>
-            <img
-              alt={`Image of ${product.name}`}
-              src={product.imageUrl}
-              className="w-full rounded-lg"
-            />
+            <p className="text-2xl font-bold">$ {product.price}</p>
             <p className="">Disponibles: {product.stock}</p>
             <button
-              className="bg-green-600 text-white px-4 rounded-md mt-4 w-full"
+              className="bg-black border border-white transition-colors hover:bg-green-700 text-white px-4 py-2 rounded-md mt-4 w-full"
               onClick={() => handlePay(product)}
             >
               Comprar

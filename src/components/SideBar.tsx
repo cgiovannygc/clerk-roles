@@ -92,6 +92,15 @@ export default function SideBar() {
               Dashboard
             </Link>
           )}
+          <SignedIn>
+            <Link
+              href="/tasks"
+              onClick={() => setIsSidebarOpen(false)}
+              className="rounded-md px-2 py-1.5 transition-colors hover:bg-gray-800"
+            >
+              Tareas
+            </Link>
+          </SignedIn>
           <Link
             href="/store"
             onClick={() => setIsSidebarOpen(false)}

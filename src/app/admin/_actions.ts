@@ -25,6 +25,11 @@ export async function setRole(formData: FormData) {
 
 export async function removeRole(formData: FormData) {
   const client = await clerkClient();
+
+  if (!checkRole("admin")) {
+    return { message: "No autorizado" };
+  }
+
   try {
     const res = await client.users.updateUserMetadata(
       formData.get("id") as string,
@@ -33,6 +38,21 @@ export async function removeRole(formData: FormData) {
       },
     );
     return { message: res.publicMetadata };
+  } catch (err) {
+    return { message: err };
+  }
+}
+
+export async function deleteUser(formData: FormData) {
+  const client = await clerkClient();
+
+  if (!checkRole("admin")) {
+    return { message: "No autorizado" };
+  }
+
+  try {
+    const res = await client.users.deleteUser(formData.get("id") as string);
+    return { message: "Usuario eliminado" };
   } catch (err) {
     return { message: err };
   }

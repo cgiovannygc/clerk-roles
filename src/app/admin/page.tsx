@@ -1,122 +1,22 @@
-import { SearchUsers } from "./SearchUsers";
-import { clerkClient } from "@clerk/nextjs/server";
-import { removeRole, setRole } from "./_actions";
+import Link from "next/link";
 
-export default async function AdminDashboard(params: {
-  searchParams: Promise<{ search?: string }>;
-}) {
-  const query = (await params.searchParams).search;
-  const client = await clerkClient();
-  const users = query
-    ? (await client.users.getUserList({ query })).data
-    : (await client.users.getUserList()).data;
-
+export default function AdminDashboard() {
   return (
-    <section className="mx-auto flex w-full max-w-4xl flex-col gap-4 px-4 py-6">
-      <SearchUsers />
-      {!query && (
-        <p className="rounded-lg border border-border bg-background/80 p-4 text-sm text-muted-foreground backdrop-blur">
-          Busca por nombre o email para administrar roles.
-        </p>
-      )}
-
-      {query && users.length === 0 && (
-        <p className="rounded-lg border border-border bg-background/80 p-4 text-sm text-muted-foreground backdrop-blur">
-          No se encontraron usuarios para {query}.
-        </p>
-      )}
-
-      {users.map((user) => {
-        const email = user.emailAddresses.find(
-          (e) => e.id === user.primaryEmailAddressId,
-        )?.emailAddress;
-        const currentRole = (user.publicMetadata.role as string) || "Sin rol";
-        const normalizedRole = currentRole.toLowerCase();
-        const rolePillClass =
-          normalizedRole === "admin"
-            ? "border-foreground/30 bg-foreground/10 text-foreground"
-            : normalizedRole === "user"
-              ? "border-border bg-muted text-foreground"
-              : "border-border bg-background text-muted-foreground";
-
-        return (
-          <article
-            key={user.id}
-            className="rounded-lg border border-border bg-background/80 p-4 backdrop-blur"
-          >
-            <div className="mb-4 space-y-1">
-              <div className="mb-2">
-                <img
-                  width={60}
-                  src={user.imageUrl}
-                  alt={`Imagen de ${user.firstName}`}
-                  className="rounded-4xl mb-1"
-                />
-              </div>
-              <div>
-                <p className="text-sm font-semibold tracking-wide text-foreground p-1">
-                  {user.firstName} {user.lastName}
-                </p>
-                <p className="text-sm text-muted-foreground p-1">{email}</p>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground p-1">
-                <span>Rol actual:</span>
-                <span
-                  className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium tracking-wide ${rolePillClass} p-1`}
-                >
-                  {currentRole}
-                </span>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <form
-                action={async (formData) => {
-                  "use server";
-                  await setRole(formData);
-                }}
-              >
-                <input type="hidden" value={user.id} name="id" />
-                <input type="hidden" value="admin" name="role" />
-                <button
-                  type="submit"
-                  className="rounded-md border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-gray-700"
-                >
-                  Hacer admin
-                </button>
-              </form>
-              <form
-                action={async (formData) => {
-                  "use server";
-                  await setRole(formData);
-                }}
-              >
-                <input type="hidden" value={user.id} name="id" />
-                <input type="hidden" value="user" name="role" />
-                <button
-                  type="submit"
-                  className="rounded-md border border-border px-3 py-1.5 text-sm font-medium transition-colors hover:bg-green-700"
-                >
-                  Hacer usuario
-                </button>
-              </form>
-              <form
-                action={async (formData) => {
-                  "use server";
-                  await removeRole(formData);
-                }}
-              >
-                <input type="hidden" value={user.id} name="id" />
-                <button
-                  type="submit"
-                  className="rounded-md bg-foreground px-3 py-1.5 text-sm font-medium text-background transition-colors hover:bg-red-600"
-                >
-                  Remover Rol
-                </button>
-              </form>
-            </div>
-          </article>
-        );
-      })}
-    </section>
+    <div className="w-full h-full mt-5">
+      <div className="flex flex-col md:flex-row lg:flex-row items-center justify-center md:justify-around lg:justify-around">
+        <Link
+          className="border border-white bg-black transition-colors hover:bg-amber-700 text-white rounded-md px-4 py-2 w-4/12 text-center mb-2 md:mb-0 lg:mb-0"
+          href={"/admin/changeRoles"}
+        >
+          Administrar roles
+        </Link>
+        <Link
+          className="border border-white bg-black transition-colors hover:bg-emerald-700 text-white rounded-md px-4 py-2 w-4/12 text-center mt-2 md:mt-0 lg:mt-0"
+          href={"/admin/manageUsers"}
+        >
+          Administrar usuarios
+        </Link>
+      </div>
+    </div>
   );
 }

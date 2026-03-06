@@ -1,0 +1,76 @@
+### 🧩 Funcionalidades mínimas
+
+### 🌍 Parte pública
+
+- Landing Page accesible sin login
+- Descripción clara del producto
+- Botones:
+    - Login
+    - Register
+
+---
+
+### 🔐 Parte privada
+
+- Login / Register funcional
+- Redirección post-login
+- Dashboard de usuario
+- To-Dos filtrados por usuario
+
+---
+
+### 🧠 Roles
+
+### 👤 Usuario
+
+- CRUD de sus propios To-Dos
+- No ve información de otros
+
+### 🛠️ Administrador
+
+- CRUD de sus To-Dos
+- Lista de usuarios (metadatos mínimos)
+- Bloquear / desbloquear usuarios
+- Eliminar usuarios
+
+❌ El admin **no puede** ver To-Dos ajenos.
+
+---
+
+## 🔐 Reglas técnicas obligatorias
+
+### 1️⃣ Protección de rutas
+
+- Rutas públicas y privadas bien definidas
+- Middleware o guards correctamente usados
+
+📌 No solo esconder botones.
+
+---
+
+### 2️⃣ Autorización en Convex
+
+- Verificar `userId`
+- Validar rol en backend
+- No confiar en el frontend
+
+📌 Seguridad ≠ UI.
+
+---
+
+### 3️⃣ Asociación usuario ↔ datos
+
+- Cada To-Do debe pertenecer a un usuario
+- Queries filtradas por `userId`
+
+📌 Datos aislados correctamente.
+
+---
+
+### 4️⃣ Manejo correcto de usuarios
+
+- Admin puede gestionar usuarios
+- No acceder a datos sensibles
+- Operaciones seguras
+
+📌 Principio de mínimo privilegio.

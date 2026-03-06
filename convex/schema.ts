@@ -17,4 +17,12 @@ export default defineSchema({
     imageUrl: v.optional(v.string()),
     stock: v.optional(v.number()),
   }),
+  tasks: defineTable({
+    userId: v.id("users"),
+    title: v.string(),
+    description: v.string(),
+    completed: v.boolean(),
+  })
+    .index("by_user_id", ["userId"])
+    .index("by_user_and_complete", ["userId", "completed"]),
 });
