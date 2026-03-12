@@ -51,7 +51,7 @@ export async function deleteUser(formData: FormData) {
   }
 
   try {
-    const res = await client.users.deleteUser(formData.get("id") as string);
+    await client.users.deleteUser(formData.get("id") as string);
     return { message: "Usuario eliminado" };
   } catch (err) {
     return { message: err };

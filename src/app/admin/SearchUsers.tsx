@@ -10,7 +10,7 @@ export const SearchUsers = () => {
 
   return (
     <form
-      className="flex w-full flex-col gap-2 rounded-lg border border-border bg-background/80 p-4 backdrop-blur"
+      className="app-card p-5"
       onSubmit={(e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -26,25 +26,36 @@ export const SearchUsers = () => {
     >
       <label
         htmlFor="search"
-        className="text-lg font-semibold tracking-wide text-foreground"
+        className="text-lg font-bold tracking-tight text-(--app-title)"
       >
         Buscar usuarios
       </label>
-      <div className="flex items-center gap-2">
+      <p className="app-body-text mt-1">
+        Encuentra usuarios por nombre o correo para administrar su cuenta.
+      </p>
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row">
         <input
           id="search"
           name="search"
           type="text"
           defaultValue={currentSearch}
           placeholder="Buscar por nombre o email"
-          className="h-10 w-9/12 rounded-md border border-border bg-background px-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-foreground/40"
+          className="app-input h-11 flex-1 rounded-full"
         />
-        <button
-          type="submit"
-          className="h-10 w-3/12 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-opacity hover:opacity-70"
-        >
-          Buscar
-        </button>
+        <div className="flex gap-2 sm:w-auto">
+          <button type="submit" className="app-pill-button-solid h-11">
+            Buscar
+          </button>
+          {currentSearch && (
+            <button
+              type="button"
+              onClick={() => router.push(pathname)}
+              className="app-pill-button-soft h-11"
+            >
+              Limpiar
+            </button>
+          )}
+        </div>
       </div>
     </form>
   );

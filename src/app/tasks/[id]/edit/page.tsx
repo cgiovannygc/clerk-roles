@@ -7,5 +7,9 @@ export default async function EditPage({
   params: { id: Id<"tasks"> };
 }) {
   const { id } = await params;
-  return <EditTaskComp taskId={id} />;
+  return (
+    <div className="min-h-screen bg-[#d7baa5] px-4 py-8 md:px-8 lg:px-12">
+      <EditTaskComp taskId={id} />
+    </div>
+  );
 }

@@ -1,3 +1,4 @@
+import { ProductAndUserProps } from "@/lib/props/props";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
@@ -9,30 +10,43 @@ if (!sk) {
 const stripe = new Stripe(sk);
 
 export async function POST(req: Request) {
-  const body = await req.json();
+  const body = (await req.json()) as ProductAndUserProps;
+  const imageUrl = body.product.imageUrl;
+  const productId = body.product._id;
+  const userId = body.user._id;
+
+  if (!imageUrl || !productId || !userId) {
+    return NextResponse.json(
+      { error: "Missing required checkout data" },
+      { status: 400 },
+    );
+  }
 
   const session = await stripe.checkout.sessions.create({
     // creamos una sesion de checkout, basicamente es una instancia de compra, a la que le pasamos los siguientes parametros:
     success_url: "http://localhost:3000/store/success", // url a la que se redirecciona al usuario despues de una compra exitosa
     cancel_url: "http://localhost:3000/store/cancel", // url a la que se redirecciona al usuario despues de cancelar la compra
+    mode: "payment",
     line_items: [
       {
+        quantity: 1,
         price_data: {
           currency: "usd",
+          unit_amount: Math.round(body.product.price * 100), // el precio se multiplica por 100 porque stripe maneja los precios en centavos
           product_data: {
-            name: body.name,
-            description: body.description,
-            images: [body.imageUrl],
+            name: body.product.name,
+            description: body.product.description,
+            images: [imageUrl],
           },
-          unit_amount: body.price * 100, // el precio se multiplica por 100 porque stripe maneja los precios en centavos
         },
-        quantity: 1,
       },
     ],
-    mode: "payment",
     metadata: {
-      productId: body._id, // guardamos el id del producto en los metadatos de la sesion, esto nos servira para identificar el producto comprado en el webhook y actualizar el stock
+      quantity: 1,
+      productId,
+      userId,
     },
   });
+  console.log(body);
   return NextResponse.json(session);
 }

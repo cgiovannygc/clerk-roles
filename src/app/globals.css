@@ -3,6 +3,19 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --app-page-bg: #d7baa5;
+  --app-shell-bg: #f5f6f7;
+  --app-shell-border: #d8d8d8;
+  --app-card-bg: #ffffff;
+  --app-card-border: #e6e8ee;
+  --app-hero-bg: #ece6dc;
+  --app-accent: #0f4f43;
+  --app-accent-hover: #0b3c34;
+  --app-title: #1f2733;
+  --app-text: #667080;
+  --app-input-bg: #f8fafb;
+  --app-input-border: #dde2ea;
+  --app-shadow: 0 22px 60px -34px rgba(15, 23, 42, 0.45);
 }
 
 @theme inline {
@@ -23,4 +36,107 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer components {
+  .app-page {
+    @apply min-h-screen px-4 py-8 md:px-8 lg:px-12;
+    background: var(--app-page-bg);
+  }
+
+  .app-shell {
+    @apply mx-auto rounded-3xl border p-5 md:p-8;
+    max-width: 80rem;
+    border-color: var(--app-shell-border);
+    background: var(--app-shell-bg);
+    box-shadow: var(--app-shadow);
+  }
+
+  .app-shell-compact {
+    @apply mx-auto rounded-3xl border p-5 md:p-8;
+    max-width: 56rem;
+    border-color: var(--app-shell-border);
+    background: var(--app-shell-bg);
+    box-shadow: var(--app-shadow);
+  }
+
+  .app-card {
+    @apply rounded-2xl border bg-white shadow-sm;
+    border-color: var(--app-card-border);
+    background: var(--app-card-bg);
+  }
+
+  .app-hero {
+    @apply rounded-3xl p-6 md:p-8;
+    background: var(--app-hero-bg);
+  }
+
+  .app-title {
+    @apply text-3xl font-extrabold tracking-tight sm:text-4xl;
+    color: var(--app-title);
+  }
+
+  .app-section-label {
+    @apply text-xs font-semibold uppercase tracking-[0.24em];
+    color: #5f6876;
+  }
+
+  .app-body-text {
+    @apply text-sm;
+    color: var(--app-text);
+  }
+
+  .app-pill-button {
+    @apply rounded-full border bg-white px-5 py-2 text-sm font-semibold transition;
+    border-color: var(--app-accent);
+    color: var(--app-accent);
+  }
+
+  .app-pill-button:hover {
+    background: var(--app-accent);
+    color: #fff;
+  }
+
+  .app-pill-button-soft {
+    @apply rounded-full border bg-white px-5 py-2 text-sm font-semibold transition;
+    border-color: var(--app-input-border);
+    color: #4e5868;
+  }
+
+  .app-pill-button-soft:hover {
+    border-color: var(--app-accent);
+    color: var(--app-accent);
+  }
+
+  .app-pill-button-solid {
+    @apply rounded-full border px-5 py-2 text-sm font-semibold text-white transition;
+    border-color: var(--app-accent);
+    background: var(--app-accent);
+  }
+
+  .app-pill-button-solid:hover {
+    background: var(--app-accent-hover);
+  }
+
+  .app-input {
+    @apply w-full rounded-2xl border px-4 text-sm outline-none transition;
+    border-color: var(--app-input-border);
+    background: var(--app-input-bg);
+    color: var(--app-title);
+  }
+
+  .app-input::placeholder {
+    color: #8a93a1;
+  }
+
+  .app-input:focus {
+    border-color: var(--app-accent);
+    background: #fff;
+  }
+
+  .app-empty-state {
+    @apply rounded-2xl border-dashed p-10 text-center shadow-sm;
+    border-color: #d8dde6;
+    background: #fff;
+  }
 }

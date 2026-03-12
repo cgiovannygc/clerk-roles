@@ -1,9 +1,9 @@
-import Products from "@src/components/store/Products";
+import ProductsData from "@src/components/store/products/productsData";
 
 export default function StorePage() {
   return (
-    <div className="px-40 pt-10">
-      <Products />
+    <div className="min-h-screen bg-[#d7baa5] px-4 py-8 md:px-8 lg:px-12">
+      <ProductsData />
     </div>
   );
 }

@@ -25,27 +25,53 @@ export async function POST(req: Request): Promise<Response> {
   ); // declaramos una variable para almacenar el evento de stripe, que se construira a partir de la firma y el body recibido
 
   if (!event) {
-    console.error("Error al construir el evento de Stripe");
     return NextResponse.json({ error: "Invalid event" });
   }
 
   switch (event.type) {
     case "checkout.session.completed":
       try {
-        await fetchMutation(api.products.updateStockProduct, {
-          id: event.data.object.metadata?.productId as Id<"products">,
-          // obtenemos el id del producto desde los metadatos de la sesion de checkout
+        const session = event.data.object as Stripe.Checkout.Session;
+
+        console.log(`-------webhook--------- ${session.line_items}`);
+
+        const productId = session.metadata!.productId as Id<"products">;
+        const userId = session.metadata!.userId as Id<"users">;
+        const quantityRaw = session.metadata!.quantity;
+        const quantity = quantityRaw ? Number(quantityRaw) : NaN;
+        console.log(quantityRaw);
+        console.log(quantity);
+
+        if (
+          !productId ||
+          !userId ||
+          !Number.isInteger(quantity) ||
+          quantity <= 0
+        ) {
+          return NextResponse.json(
+            { error: "Invalid checkout metadata (productId/userId/quantity)" },
+            { status: 400 },
+          );
+        }
+
+        await fetchMutation(api.purchases.createPurchase, {
+          quantity,
+          productId,
+          userId,
         });
-        return NextResponse.json({ success: true });
+
+        return NextResponse.json({ ok: true });
       } catch (error) {
-        return NextResponse.json({
-          error: `can't update product's stock (WEBHOOK): ${error}`,
-        });
+        return NextResponse.json(
+          { error: `can't update product's stock (WEBHOOK): ${String(error)}` },
+          { status: 500 },
+        );
       }
       break;
     default:
-      console.warn(`Evento no soportado: ${event.type}`);
-      return NextResponse.json({ error: "Event not supported" });
-      break;
+      return NextResponse.json(
+        { error: `Event not supported: ${event.type}` },
+        { status: 400 },
+      );
   }
 }

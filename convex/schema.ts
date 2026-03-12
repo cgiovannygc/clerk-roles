@@ -17,6 +17,22 @@ export default defineSchema({
     imageUrl: v.optional(v.string()),
     stock: v.optional(v.number()),
   }),
+  /** Tabla intermedia para guardar los productos que compro cada usuario */
+  purchases: defineTable({
+    userId: v.id("users"),
+    productId: v.id("products"),
+    quantity: v.number(),
+    pricePaid: v.number(),
+    createdAt: v.number(),
+    status: v.union(
+      v.literal("pending"),
+      v.literal("completed"),
+      v.literal("refunded"),
+    ),
+  })
+    .index("by_user", ["userId"]) // compras de un usuario
+    .index("by_product", ["productId"]) // compras de un producto
+    .index("by_user_and_product", ["userId", "productId"]), // ambos juntos
   tasks: defineTable({
     userId: v.id("users"),
     title: v.string(),
